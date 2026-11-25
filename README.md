@@ -1,65 +1,52 @@
-# File Deletion Script
+# space-freer
 
-## Overview
+Interactively delete files above a size threshold to free up disk space.
 
-This Python script is designed to help you manage your files by deleting files in a specified directory that exceed a minimum size threshold. It provides an interactive interface for confirming file deletion, ensuring that you don't accidentally remove important files.
+## What it is
 
-## Features
+A small Python command-line tool that walks a directory, finds files larger than a minimum size, and asks for y/n confirmation before deleting each one. File sizes are shown in a human-readable format.
 
-- Interactive file deletion confirmation.
-- Specify the directory to search for files.
-- Set a minimum file size threshold (in megabytes).
-- Display file sizes in a human-readable format.
+## Stack
 
-## Prerequisites
+- Python 3, standard library only (`os`, `argparse`, `enum`)
+- `delete_files.py`: the CLI entry point
+- `ByteConverter.py`: byte, KB, MB and GB helpers and a human-readable size formatter
+- `ByteConverterTest.py`: a print-only demo of the converter
 
-- [Python 3.x](https://www.python.org/downloads/) installed on your system.
+## Run it
 
-## Usage
-
-1. **Clone or Download**: Clone or download the script to your local machine.
-
-2. **Open Terminal or Command Prompt**: Open your terminal or command prompt and navigate to the directory containing the script.
-
-3. **Run the Script**: Run the script with the following command:
+Requires [Python 3](https://www.python.org/downloads/). There is nothing to install.
 
 ```bash
 python3 delete_files.py --directory <directory_path> --min-size <min_size>
 ```
 
-
-
-- Replace <directory_path> with the path to the directory where you want to delete files.
-- Replace <min_size> with the minimum file size in megabytes. By default, this is set to 1 megabyte.
+- `--directory`: path to the directory to scan (required).
+- `--min-size`: minimum file size in megabytes. Defaults to 1.
 
 Example:
+
 ```bash
-python file_deletion_script.py --directory /path/to/your/directory --min-size 10
+python3 delete_files.py --directory /path/to/your/directory --min-size 10
 ```
 
-- This command will search for files larger than 10 megabytes in the specified directory and ask for confirmation before deleting each one.
+This scans for files larger than 10 megabytes and prompts for each one. Type `y` to delete or `n` to skip:
 
-
-1. **The script will start scanning the specified directory for files larger than the minimum size threshold.** It will display a list of files and ask for your confirmation before deleting each one. To confirm deletion, type 'y'; to skip, type 'n'.
-
-Example:
-```shell
+```
 Delete '/path/to/your/directory/large_file.txt'? (y/n): y
 Deleted '/path/to/your/directory/large_file.txt'
 ```
 
-2. **After the script completes, it will inform you if any deletions occurred or if the operation was unsuccessful.**
-```shell
-Deletion completed.
-```
+When the scan finishes, the script reports whether any deletions occurred. Press Ctrl+C at any time to cancel.
 
-## Notes
+## Safety
 
-- Be cautious when using this script, especially with the --min-size option, as it can permanently delete files from your system.
+Deletion is permanent. Files are removed with `os.remove`, not moved to the trash, and there is no dry-run mode. Review each prompt carefully, especially with a low `--min-size`.
 
-- If you decide to cancel the operation at any time, you can do so by pressing Ctrl + C.
+## License
 
-# Author
+MIT. See [LICENSE](LICENSE).
 
-* Author: Jonathan Mshelia
-* Email: jonathanjamesm66@gmail.com
+## Author
+
+Jonathan James ([jona62](https://github.com/jona62))
