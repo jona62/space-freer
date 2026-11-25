@@ -21,14 +21,14 @@ def check_valid_directory(directory_path: str) -> bool:
         if not os.listdir(directory_path):
             print("The directory is empty.")
             exit(1)
-    except:
+    except OSError:
         print("No such file or directory")
         exit(1)
 
 def delete_files(directory_path: str, min_size_megabytes: MegaBytes) -> bool:
     delete_happened = False
     check_valid_directory(directory_path)
-    print(f"Filtering for files under {human_readable_size(min_size_megabytes)} under folder: {directory_path}")
+    print(f"Filtering for files over {human_readable_size(min_size_megabytes)} under folder: {directory_path}")
     # Walk through the directory and list large files
     for root, dirs, files in os.walk(directory_path):
         for filename in files:
